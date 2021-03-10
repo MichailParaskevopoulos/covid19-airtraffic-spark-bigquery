@@ -9,7 +9,8 @@ import warnings
 import re
 
 #set input to all csv files of the covid19flights bucket
-inputDir = 'gs://covid19flights/*.csv'
+#inputDir = 'gs://covid19flights/*.csv'
+inputDir = 'gs://covid19flights/flightlist_20190101_20190131.csv'
 
 if __name__ == '__main__':
 	scSpark = SparkSession.builder.appName("reading csv").getOrCreate()
