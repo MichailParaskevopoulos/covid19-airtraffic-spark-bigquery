@@ -24,6 +24,9 @@ def main():
 	data_file = inputDir
 	sdfData = scSpark.read.csv(data_file, header=True, sep=",")
 	
+	#Drop null values
+	sdfData.na.drop(subset=["origin","destination","typecode","callsign"])
+	
 	udf_month_of_row = f.udf(month_of_row, StringType())
 	
 	sdfData_with_month = sdfData.withColumn("month", to_date(unix_timestamp(udf_month_of_row("day"), "yyyy-MM-dd").cast("timestamp")))
