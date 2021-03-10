@@ -10,7 +10,7 @@ import warnings
 import re
 
 #inputDir = 'gs://covid19flights/*.csv'
-inputDir = 'gs://covid19flights/flightlist_20190101_20190131.csv'
+inputDir = 'gs://covid19flights/flightlist_20190201_20190228.csv'
 
 if __name__ == '__main__':
 	scSpark = SparkSession.builder.appName("reading csv").getOrCreate()
