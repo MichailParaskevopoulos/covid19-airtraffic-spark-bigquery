@@ -25,7 +25,7 @@ def main():
 	sdfData = scSpark.read.csv(data_file, header=True, sep=",")
 	
 	#Drop null values
-	sdfData.na.drop(subset=["origin","destination","typecode","callsign"])
+	sdfData = sdfData.na.drop(how='any', thresh=None, subset=["origin","destination","typecode","callsign"])
 	
 	udf_month_of_row = f.udf(month_of_row, StringType())
 	
