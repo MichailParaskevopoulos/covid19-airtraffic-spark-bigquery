@@ -25,8 +25,9 @@ if __name__ == '__main__':
 	udf_month_of_row = f.udf(month_of_row, StringType())
 	
 	sdfData_with_month = sdfData.withColumn("month", udf_month_of_row("day"))
-	sdfData_with_month.write.format("bigquery").option("datePartition", "YYYYMMDD").save("covid19flights:covid19_airtraffic.count")
-	
+	sdfData_with_month.write.format("bigquery").option("partitionField", "month").save("covid19flights:covid19_airtraffic.count")
+	      .option("partitionField", "t")
+      .option("partitionType", partitionType)
 	#sdfData.registerTempTable("airports")
 	
 	#output =  scSpark.sql('SELECT COUNT(destination) as count_destination, origin, destination from airports GROUP BY origin, destination')
