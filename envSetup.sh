@@ -21,6 +21,6 @@ for i in $(jq -r ". | .[]" datasetURLs.json)
   do
     wget $i
     gunzip $(basename $i)
-    gsutil cp $(basename $i .gz) gs://${PROJECT_ID}
+    gsutil cp /covid19_airtraffic_data/$(basename $i .gz) gs://${PROJECT_ID}
     rm $(basename $i .gz)
   done
