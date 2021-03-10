@@ -1,25 +1,24 @@
 import pyspark as ps
 from pyspark.sql import functions as f
 from pyspark.sql import types as t
+from pyspark.sql import SparkSession
+from pyspark.sql import SQLContext
 from pyspark.sql.types import StringType
+
 import warnings
 import re
 
-inputDir = gs://covid19flights/
+#set input to all csv files of the covid19flights bucket
+inputDir = 'gs://covid19flights/*.csv'
 
-#define regex pattern for preprocessing
-iata_airline = r"^[A-Z]{3}"
+if __name__ == '__main__':
+	scSpark = SparkSession.builder.appName("reading csv").getOrCreate()
+	data_file = inputDir
+	sdfData = scSpark.read.csv(data_file, header=True, sep=",").cache()
 
-def processing_airline(column):
-  return re.match(iata_airline,column)[0]
+	sdfData.registerTempTable("airports")
+	output =  scSpark.sql('SELECT COUNT(destination) as count_destination from airports GROUP BY origin')
+	output.write.format('json').save('filtered.json')
 
 
-def main(input_dir):
-	try:
-	    sc = ps.SparkContext()
-	    sc.setLogLevel("ERROR")
-	    sqlContext = ps.sql.SQLContext(sc)
-	    print('Created a SparkContext')
-	except ValueError:
-	    warnings.warn('SparkContext already exists in this scope')  
-
+	
