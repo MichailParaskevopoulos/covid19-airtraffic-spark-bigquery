@@ -24,3 +24,5 @@ for i in $(jq -r ". | .[]" datasetURLs.json)
     gsutil cp $(basename $i .gz) gs://${PROJECT_ID}
     rm $(basename $i .gz)
   done
+  
+ gsutil cp datasetURLs.json gs://covid19flights
