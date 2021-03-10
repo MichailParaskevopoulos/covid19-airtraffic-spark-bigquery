@@ -18,10 +18,10 @@ def month_of_row(day):
 	return "{}-{}-01".format(day_components[0],day_components[1])
 
 if __name__ == '__main__':
-	scSpark = SparkSession.builder.appName("reading csv").getOrCreate()
+	scSpark = SparkSession.builder.appName("covid19_airtraffic_data").getOrCreate()
 	data_file = inputDir
 	
-	fileNames = spark.read.json("gs://covid19flights/datasetURLs.json")
+	fileNames = scSpark.read.json("gs://covid19flights/datasetURLs.json")
 	
 	scSpark.conf.set("temporaryGcsBucket","pyspark_output_files")
 	
