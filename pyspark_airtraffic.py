@@ -28,7 +28,7 @@ if __name__ == '__main__':
 	#sdfData_with_month = sdfData.withColumn("month", udf_month_of_row("day"))
 	
 	sdfData_with_month = sdfData.withColumn("month", to_date(unix_timestamp(col("day"), "MM-dd-yyyy HH:mm:ss").cast("timestamp")))
-	sdfData_with_month.write.mode(SaveMode.Overwrite).format("bigquery").option("table", "covid19flights:covid19_airtraffic.count").option("partitionField", "month").save()
+	sdfData_with_month.write.format("bigquery").option("partitionField", "month").save("covid19flights:covid19_airtraffic.count")
 	#sdfData_with_month.write.format("bigquery").save("covid19flights:covid19_airtraffic.count")
 		
 	#sdfData.registerTempTable("airports")
