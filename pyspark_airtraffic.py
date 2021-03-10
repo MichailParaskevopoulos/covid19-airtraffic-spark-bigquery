@@ -9,8 +9,8 @@ from pyspark.sql.types import StringType
 import warnings
 import re
 
-inputDir = 'gs://covid19flights/*.csv'
-#inputDir = 'gs://covid19flights/flightlist_20190101_20190131.csv'
+#inputDir = 'gs://covid19flights/*.csv'
+inputDir = 'gs://covid19flights/flightlist_20190101_20190131.csv'
 
 if __name__ == '__main__':
 	scSpark = SparkSession.builder.appName("reading csv").getOrCreate()
@@ -26,7 +26,7 @@ if __name__ == '__main__':
 	udf_month_of_row = f.udf(month_of_row, StringType())
 	
 	sdfData_with_month = sdfData.withColumn("month", to_date(unix_timestamp(udf_month_of_row("day"), "yyyy-MM-dd").cast("timestamp")))
-	sdfData_with_month.write.format("bigquery").option("partitionField", "month").save("covid19flights:covid19_airtraffic.count")
+	sdfData_with_month.write.format("bigquery").option("table","covid19flights:covid19_airtraffic.count").option("partitionField", "month").mode("append").save()
 	
 	
 	
