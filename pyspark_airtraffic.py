@@ -39,7 +39,7 @@ def preprocessing(dataFrame):
 	udf_distance = f.udf(distance_travelled, FloatType())
 	
 	#Drop null values
-	dataFrame = dataFrame.na.drop(how='any', thresh=None, subset=["origin","destination","typecode","callsign"])
+	dataFrame = dataFrame.na.drop(how='any', thresh=None, subset=["origin","destination","typecode","callsign","latitude_1","longitude_1","latitude_2","longitude_2"])
 	#Create "month" dimension to be used as the partitioning field
 	dataFrame = dataFrame.withColumn("month", to_date(unix_timestamp(udf_month_of_row("day"), "yyyy-MM-dd").cast("timestamp")))
 	
