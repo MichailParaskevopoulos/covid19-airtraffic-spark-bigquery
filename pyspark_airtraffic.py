@@ -11,10 +11,7 @@ import re
 
 #inputDir = 'gs://covid19flights/*.csv'
 #inputDir = 'gs://covid19flights/{}'
-inputDir = 'gs://covid19flights/flightlist_20190701_20190731.csv'
-
-with open('gs://covid19flights/datasetURLs.json') as json_file:
-  fileNames = json.load(json_file)
+inputDir = "gs://covid19flights/flightlist_20190701_20190731.csv"
 
 def month_of_row(day):
 	day_components = day.split('-')
@@ -23,6 +20,9 @@ def month_of_row(day):
 if __name__ == '__main__':
 	scSpark = SparkSession.builder.appName("reading csv").getOrCreate()
 	data_file = inputDir
+	
+	fileNames = spark.read.json("gs://covid19flights/datasetURLs.json")
+	
 	scSpark.conf.set("temporaryGcsBucket","pyspark_output_files")
 	
 	sdfData = scSpark.read.csv(data_file, header=True, sep=",").cache()
