@@ -21,7 +21,7 @@ if __name__ == '__main__':
 	#output.write.format('json').save('filtered.json')
 	df = sdfData.groupBy('origin').count()
 	
-	scSpark.conf.set("temporaryGcsBucket","gs://pyspark_output_files")
+	scSpark.conf.set("temporaryGcsBucket","pyspark_output_files")
 	df.write.format("bigquery").save("covid19flights:covid19_airtraffic.count")
 
 
