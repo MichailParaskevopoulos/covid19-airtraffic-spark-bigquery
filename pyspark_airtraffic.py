@@ -14,15 +14,18 @@ inputDir = 'gs://covid19flights/*.csv'
 if __name__ == '__main__':
 	scSpark = SparkSession.builder.appName("reading csv").getOrCreate()
 	data_file = inputDir
+	scSpark.conf.set("temporaryGcsBucket","pyspark_output_files")
+	
 	sdfData = scSpark.read.csv(data_file, header=True, sep=",").cache()
 
 	sdfData.registerTempTable("airports")
-	#output =  scSpark.sql('SELECT COUNT(destination) as count_destination from airports GROUP BY origin')
-	#output.write.format('json').save('filtered.json')
-	df = sdfData.groupBy('origin').count()
 	
-	scSpark.conf.set("temporaryGcsBucket","pyspark_output_files")
-	df.write.format("bigquery").save("covid19flights:covid19_airtraffic.count")
+	output =  scSpark.sql('SELECT COUNT(destination) as count_destination from airports GROUP BY origin')
+	output.write.format("bigquery").save("covid19flights:covid19_airtraffic.count")
+
+	
+	#df = sdfData.groupBy('origin').count()
+	#df.write.format("bigquery").save("covid19flights:covid19_airtraffic.count")
 
 
 	
