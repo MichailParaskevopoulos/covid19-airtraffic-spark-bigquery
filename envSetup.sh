@@ -13,7 +13,7 @@ pip install requests
 
 python datasetJSON.py
 
-export PROJECT_ID='biiibo-proj-2'
+export PROJECT_ID='covid19flights'
 for i in $(jq -r ". | .[]" datasetURLs.json)
   do
     wget $i
