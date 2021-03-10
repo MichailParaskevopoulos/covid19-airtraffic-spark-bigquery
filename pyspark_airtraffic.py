@@ -18,12 +18,20 @@ if __name__ == '__main__':
 	
 	sdfData = scSpark.read.csv(data_file, header=True, sep=",").cache()
 
-	sdfData.registerTempTable("airports")
+	def month_of_row(day):
+		day_components = day.split('-')
+		return "{}{}01".format(day_components[0],day_components[1])
 	
-	output =  scSpark.sql('SELECT COUNT(destination) as count_destination, origin, destination from airports GROUP BY origin, destination')
-	output.write.format("bigquery").save("covid19flights:covid19_airtraffic.count")
+	udf_month_of_row = f.udf(month_of_row, StringType())
+	
+	sdfData_with_month = sdfData.withColumn("month", udf_month_of_row("day"))
+	sdfData_with_month.write.format("bigquery").option("datePartition", "YYYYMMDD").save("covid19flights:covid19_airtraffic.count")
+	
+	#sdfData.registerTempTable("airports")
+	
+	#output =  scSpark.sql('SELECT COUNT(destination) as count_destination, origin, destination from airports GROUP BY origin, destination')
+	#output.write.format("bigquery").save("covid19flights:covid19_airtraffic.count")
 
-	
 	#df = sdfData.groupBy('origin').count()
 	#df.write.format("bigquery").save("covid19flights:covid19_airtraffic.count")
 
