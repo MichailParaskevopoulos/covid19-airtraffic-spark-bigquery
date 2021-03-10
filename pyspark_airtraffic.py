@@ -20,7 +20,7 @@ if __name__ == '__main__':
 
 	sdfData.registerTempTable("airports")
 	
-	output =  scSpark.sql('SELECT COUNT(destination) as count_destination from airports GROUP BY origin')
+	output =  scSpark.sql('SELECT COUNT(destination) as count_destination, origin, destination from airports GROUP BY origin, destination')
 	output.write.format("bigquery").save("covid19flights:covid19_airtraffic.count")
 
 	
