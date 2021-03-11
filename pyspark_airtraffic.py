@@ -55,7 +55,7 @@ def preprocessing(dataFrame):
 	#Create column of distance travelled
 	dataFrame = dataFrame.withColumn("distance", udf_distance("latitude_1","longitude_1","latitude_2","longitude_2"))
 	#Create column of flight category
-	dataFrame = dataFrame.withColumn("flight_category", udf_flight_category("distance")
+	dataFrame = dataFrame.withColumn("flight_category", udf_flight_category("distance"))
 	#Create column of IATA airline identifier			 
 	dataFrame = dataFrame.withColumn("iata_airline", regexp_extract(col("callsign"), "^[A-Z]{3}", 1))	 
 	#Drop columns
