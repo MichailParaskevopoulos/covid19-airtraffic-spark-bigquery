@@ -10,8 +10,8 @@ def main():
 	
 	schema = StructType([
     			StructField("plane_name", StringType(), True),
-    			StructField("plane_id", StringType(), True),
-    			StructField("plane_iata_id", StringType(), True)])	
+    			StructField("plane_iata_code", StringType(), True),
+    			StructField("plane_icao_code", StringType(), True)])	
 	
 	sdfData = scSpark.read.csv(data_file, header=False, schema=schema, sep=",")
 	sdfData.write.format("bigquery").option("table","covid19flights:covid19_airtraffic.planes").mode("overwrite").save()	
