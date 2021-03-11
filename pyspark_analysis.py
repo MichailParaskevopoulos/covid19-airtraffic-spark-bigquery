@@ -12,12 +12,12 @@ def main():
 	
 	total_flights_monthly = scSpark.sql(""" SELECT count(callsign) as total_flights, month
 							FROM airtraffic
-							WHERE flights_category = 'long-haul'
+							WHERE flight_category = 'long-haul'
 							GROUP BY month """)
 	
 	flights_by_aircraft_type = scSpark.sql(""" SELECT count(callsign) as flights, month, typecode
 							FROM airtraffic
-							WHERE flights_category = 'long-haul'
+							WHERE flight_category = 'long-haul'
 							GROUP BY month, typecode """)
 	
 	summary = flights_by_aircraft_type.join(total_flights_monthly, on=['month'], how='left')
