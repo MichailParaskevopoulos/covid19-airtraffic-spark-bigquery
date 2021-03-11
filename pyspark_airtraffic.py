@@ -78,7 +78,7 @@ def main():
 	sdfData = scSpark.read.csv(data_file, header=True, sep=",")
 	
 	sdfData = preprocessing(sdfData)
-	sdfData.write.format("bigquery").option("table","covid19flights:covid19_airtraffic.records").option("partitionField", "month").mode("append").save()	
+	sdfData.write.format("bigquery").option("table","covid19flights:covid19_airtraffic.airtraffic").option("partitionField", "month").mode("append").save()	
 		
 if __name__ == '__main__':
 	main()
