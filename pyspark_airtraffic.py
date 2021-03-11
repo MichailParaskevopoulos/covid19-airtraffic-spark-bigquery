@@ -1,9 +1,6 @@
 import pyspark as ps
 from pyspark.sql import functions as f
 from pyspark.sql.functions import regexp_extract, col, unix_timestamp, to_date
-from pyspark.sql import types as t
-from pyspark.sql import SparkSession
-from pyspark.sql import SQLContext
 from pyspark.sql.types import StringType
 from pyspark.sql.types import FloatType
 
