@@ -17,7 +17,7 @@ def month_of_row(day):
 	return "{}-{}-01".format(day_components[0],day_components[1])
 
 def day_formatted(day):
-	day_components = day.split('-')
+	day_components = day.split(' ')[0].split('-')
 	return "{}-{}-{}".format(day_components[0],day_components[1],day_components[2])
 
 def distance_travelled(lat1, lon1, lat2, lon2):
