@@ -16,6 +16,10 @@ def month_of_row(day):
 	day_components = day.split('-')
 	return "{}-{}-01".format(day_components[0],day_components[1])
 
+def day_formatted(day):
+	day_components = day.split('-')
+	return "{}-{}-{}".format(day_components[0],day_components[1],day_components[2])
+
 def distance_travelled(lat1, lon1, lat2, lon2):
 	R = 6373.0
 	lat1 = math.radians(lat1)
@@ -39,9 +43,11 @@ def flight_category(distance):
 		category = "long-haul"
 	else:
 		category = "medium-haul"
-			
+	return category
+
 def preprocessing(dataFrame):
 	udf_month_of_row = f.udf(month_of_row, StringType())
+	udf_day_formatted = f.udf(day_formatted, StringType())
 	udf_distance = f.udf(distance_travelled, FloatType())
 	udf_flight_category = f.udf(flight_category, StringType())
 	
@@ -49,6 +55,8 @@ def preprocessing(dataFrame):
 	dataFrame = dataFrame.na.drop(how='any', thresh=None, subset=["origin","destination","typecode","callsign","latitude_1","longitude_1","latitude_2","longitude_2"])
 	#Create "month" dimension to be used as the partitioning field
 	dataFrame = dataFrame.withColumn("month", to_date(unix_timestamp(udf_month_of_row("day"), "yyyy-MM-dd").cast("timestamp")))
+	#Format day
+	dataFrame = dataFrame.withColumn("day", to_date(unix_timestamp(udf_day_formatted("day"), "yyyy-MM-dd").cast("timestamp")))
 	#Change column data type
 	for column in ("latitude_1","longitude_1","latitude_2","longitude_2"):
 		dataFrame = dataFrame.withColumn(column, dataFrame[column].cast(FloatType()))
@@ -59,7 +67,7 @@ def preprocessing(dataFrame):
 	#Create column of IATA airline identifier			 
 	dataFrame = dataFrame.withColumn("iata_airline", regexp_extract(col("callsign"), "^[A-Z]{3}", 0))	 
 	#Drop columns
-	dataFrame = dataFrame.drop(*["latitude_1","longitude_1","latitude_2","longitude_2","altitude_1","altitude_2","number","icao24","registration","firstseen","lastseen","day","callsign"])					
+	dataFrame = dataFrame.drop(*["latitude_1","longitude_1","latitude_2","longitude_2","altitude_1","altitude_2","number","icao24","registration","firstseen","lastseen"])					
 	return dataFrame
 	
 def main():
