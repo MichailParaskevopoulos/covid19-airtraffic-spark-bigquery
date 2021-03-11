@@ -7,6 +7,10 @@ apt-get install python3-venv
 
 cd covid19_airtraffic_data
 
+gsutil cp pyspark_airtraffic.py gs://pyspark_job_files
+gsutil cp pyspark_aircraft_types.py gs://pyspark_job_files
+gsutil cp pyspark_airlines.py gs://pyspark_job_files
+
 python3 -m venv env
 source env/bin/activate
 pip install bs4
@@ -27,7 +31,10 @@ for i in $(jq -r ". | .[]" datasetURLs.json)
   
  gsutil cp datasetURLs.json gs://covid19flights
  
- 
+cd
 git clone https://github.com/MichailParaskevopoulos/covid19_airtraffic_data.git
 cd openflights/data
-gsutil cp planes.dat gs://openflights
+gsutil cp airlines.dat gs://covid19flights_dim_tables
+
+wget https://opensky-network.org/datasets/metadata/doc8643AircraftTypes.csv
+gsutil cp doc8643AircraftTypes.csv gs://covid19flights_dim_tables
