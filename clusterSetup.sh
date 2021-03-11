@@ -14,7 +14,7 @@ gcloud dataproc clusters create ${CLUSTER_NAME} \
     --image-version 2.0.5-debian10 \
     --region ${REGION} \
     --max-idle=30m \
-    --initialization-actions gs://goog-dataproc-initialization-actions-${REGION}/connectors/connectors.sh \
+    --initialization-actions=gs://goog-dataproc-initialization-actions-${REGION}/connectors/connectors.sh \
     --metadata gcs-connector-version=2.2.0 \
     --metadata bigquery-connector-version=1.2.0 \
     --metadata spark-bigquery-connector-version=0.19.1
