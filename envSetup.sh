@@ -26,3 +26,8 @@ for i in $(jq -r ". | .[]" datasetURLs.json)
   done
   
  gsutil cp datasetURLs.json gs://covid19flights
+ 
+ 
+git clone https://github.com/MichailParaskevopoulos/covid19_airtraffic_data.git
+cd openflights/data
+gsutil cp planes.dat gs://openflights
