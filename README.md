@@ -11,7 +11,7 @@ This project executes a PySpark pipeline to extract and transform the [OpenSky N
   - Date format is modified to be compatible with the BigQuery Date data type
   - The month part of the date of each flight is copied to a new column to be used a partioning field
   - A regex expression is used to extract the airline ICAO identifier from the callsign of each flight
-  - The origin and destination coordinates are used to calculate the approximate travel distance for each flight and categorize into a short-, medium-, or long-haul flight
+  - The origin and destination coordinates are used to calculate the approximate travel distance for each flight and categorize it either as a short-, medium-, or long-haul flight
   - Reduntant columns are dropped
   - The trasnformed dataframe is loaded into BigQuery partitioned using the month column
 - `pyspark_airlines.py` and `pyspark_aircraft_types.py` PySpark files for the ETL of dimensional tables for airlines and aircraft types
