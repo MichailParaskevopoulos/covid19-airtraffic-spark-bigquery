@@ -1,6 +1,6 @@
 # ✈ A Spark-based ETL Pipeline for the OpenSky and OpenFlights Datasets
 ### Overview
-This project executes a PySpark pipeline to extract and transform the [OpenSky Network 2020](https://zenodo.org/record/4601479#.YE9oqp30mUk) dataset, and load on to Bigquery.   
+This project executes a PySpark pipeline to extract and transform the [OpenSky Network 2020](https://zenodo.org/record/4601479#.YE9oqp30mUk) dataset and load on to Bigquery.   
 ### Directory
 - `envSetup.sh` Shell script that executes `datasetFetch.py`, downloads and unzips the OpenSky and OpenFlights dataset files, and copies the files to Cloud Storage.
 - `datasetFetch.py` Python script that uses BeautifulSoup to scrap the file paths for the OpenSky dataset (26 files as of March 2021) and dumps them into a JSON file
