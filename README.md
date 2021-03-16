@@ -8,7 +8,7 @@ This project executes a PySpark pipeline to extract and transform the [OpenSky N
 - `pyspark_airtraffic.py` Main PySpark file for the ETL of the OpenSky dataset:
   - The OpenSky dataset files are loaded from the Cloud Storage into a single PySpark dataframe
   - Rows with null values are dropped
-  - Date format is modified to be compatible with the BigQuery Date data type
+  - Date format is modified to be compatible with the BigQuery date data type
   - The month part of the date of each flight is copied to a new column to be used a partioning field
   - A regex expression is used to extract the airline ICAO identifier from the callsign of each flight
   - The origin and destination coordinates are used to calculate the approximate travel distance for each flight and categorize it either as a short-, medium-, or long-haul flight
