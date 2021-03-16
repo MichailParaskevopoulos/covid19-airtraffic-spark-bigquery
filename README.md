@@ -15,7 +15,7 @@ The [OpenSky](https://zenodo.org/record/4601479#.YE9oqp30mUk) dataset spans flig
   - Reduntant columns are dropped
   - The trasnformed dataframe is loaded into BigQuery as a partitioned table based on the month column to imrpove query performance
 - `pyspark_airlines.py` and `pyspark_aircraft_types.py` PySpark files for the ETL of dimensional tables for airlines and aircraft types
-### Data Sources and Credits
+### Data Sources
 <b>OpenSky:</b><br>
 Data from the [OpenSky Network 2020](https://zenodo.org/record/4601479#.YE9oqp30mUk) were used to construct the airtraffic and aircraft type tables.
 
