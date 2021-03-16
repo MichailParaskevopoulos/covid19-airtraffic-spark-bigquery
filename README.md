@@ -2,7 +2,7 @@
 ### Motivation
 The [OpenSky](https://zenodo.org/record/4601479#.YE9oqp30mUk) dataset spans flights since January 2019 has been instrumental in analyzing the effect of COVID-19 on the aviation industry. This repository contains a PySpark pipeline to extract and transform the OpenSky dataset, and load it on to Bigquery as a fact table. PySpark pipelines are also included to process data from the [OpenFlights](https://github.com/jpatokal/openflights) dataset to construct dimensional tables with airline and aircraft data. Combined together in a single Data Warehouse, the OpenSky and OpenFlights datasets not only can be used to analyze trends in airtraffic during the COVID-19 pandemic, but also to explore patterns between different airlines and aircraft types.
 ### Description of Files
-- `envSetup.sh` Shell script that executes `datasetFetch.py`, downloads and unzips the OpenSky and OpenFlights CSV files, and copies the files to Cloud Storage.
+- `envSetup.sh` Shell script that executes `datasetFetch.py`, downloads and unzips the OpenSky and OpenFlights CSV files, and copies them to Cloud Storage.
 - `datasetFetch.py` Python script that uses BeautifulSoup to scrap the file paths for the OpenSky dataset (26 files as of March 2021) and dumps them into a JSON file
 - `clusterSetup.sh` Shell script that enables the required Google Cloud APIs, creates a Dataproc cluster, and submits the PySpark jobs
 - `pyspark_airtraffic.py` Main PySpark file for the ETL of the OpenSky dataset:
